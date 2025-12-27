@@ -2,7 +2,6 @@ const gridEl = document.getElementById("grid");
 const levelNameEl = document.getElementById("level-name");
 const targetEmojiEl = document.getElementById("target-emoji");
 const overlay = document.getElementById("overlay");
-const overlayText = document.getElementById("overlay-text");
 const nextBtn = document.getElementById("next-btn");
 
 /* ----------- BUTTON FUNCTIONALITY --------- */
@@ -120,6 +119,6 @@ nextBtn.addEventListener("click", () => {
 
 // Show start screen overlay
 overlay.classList.remove("hidden");
-overlayText.textContent = "Can YOU Find the Emoji?";
+overlayText.textContent = "Ready to Play?";
 showButton("Start");
 
