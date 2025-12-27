@@ -120,6 +120,6 @@ nextBtn.addEventListener("click", () => {
 
 // Show start screen overlay
 overlay.classList.remove("hidden");
-overlayText.textContent = "Ready to play?";
+overlayText.textContent = "Can YOU Find the Emoji?";
 showButton("Start");
 
