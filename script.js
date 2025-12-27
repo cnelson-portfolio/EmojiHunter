@@ -5,6 +5,15 @@ const overlay = document.getElementById("overlay");
 const overlayText = document.getElementById("overlay-text");
 const nextBtn = document.getElementById("next-btn");
 
+/* ----------- BUTTON FUNCTIONALITY --------- */
+function showButton(text) {
+  nextBtn.textContent = text;
+  nextBtn.style.display = "block";
+}
+
+function hideButton() {
+  nextBtn.style.display = "none";
+}
 /* ---------------- LEVELS ---------------- */
 
 const LEVELS = [
@@ -79,20 +88,19 @@ function winLevel() {
 
   if (currentLevel < LEVELS.length - 1) {
     overlayText.textContent = "🎉 You found it!";
-    nextBtn.textContent = "Next Level";
+    showButton("Next Level");
   } else {
     overlayText.textContent = "🏆 You beat IMPOSSIBLE!";
-    nextBtn.textContent = "Play Again";
+    showButton("Play Again");
   }
 }
 
 /* ---------------- BUTTON LOGIC ---------------- */
-
 nextBtn.addEventListener("click", () => {
+  hideButton();
   overlay.classList.add("hidden");
 
   if (!gameStarted) {
-    // First ever click → Start
     gameStarted = true;
     startLevel();
     return;
@@ -102,15 +110,16 @@ nextBtn.addEventListener("click", () => {
     currentLevel++;
     startLevel();
   } else {
-    // Play Again
     currentLevel = 0;
     startLevel();
   }
 });
+
 
 /* ---------------- INITIAL STATE ---------------- */
 
 // Show start screen overlay
 overlay.classList.remove("hidden");
 overlayText.textContent = "Ready to play?";
-nextBtn.textContent = "Start";
+showButton("Start");
+
