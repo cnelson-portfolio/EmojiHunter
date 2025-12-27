@@ -17,6 +17,7 @@ const LEVELS = [
 ];
 
 let currentLevel = 0;
+let gameStarted = false;
 
 /* ---------------- EMOJIS ---------------- */
 
@@ -48,17 +49,14 @@ function startLevel() {
   const totalCells = size * size;
   const cells = [];
 
-  // Fill grid with random emojis (excluding target)
   while (cells.length < totalCells) {
     const e = randomEmoji();
     if (e !== targetEmoji) cells.push(e);
   }
 
-  // Insert target emoji once
   const targetIndex = Math.floor(Math.random() * totalCells);
   cells[targetIndex] = targetEmoji;
 
-  // Render grid
   cells.forEach(emoji => {
     const cell = document.createElement("div");
     cell.className = "cell";
@@ -88,15 +86,31 @@ function winLevel() {
   }
 }
 
+/* ---------------- BUTTON LOGIC ---------------- */
+
 nextBtn.addEventListener("click", () => {
+  overlay.classList.add("hidden");
+
+  if (!gameStarted) {
+    // First ever click → Start
+    gameStarted = true;
+    startLevel();
+    return;
+  }
+
   if (currentLevel < LEVELS.length - 1) {
     currentLevel++;
+    startLevel();
   } else {
+    // Play Again
     currentLevel = 0;
+    startLevel();
   }
-  startLevel();
 });
 
-/* ---------------- START ---------------- */
+/* ---------------- INITIAL STATE ---------------- */
 
-startLevel();
+// Show start screen overlay
+overlay.classList.remove("hidden");
+overlayText.textContent = "Ready to play?";
+nextBtn.textContent = "Start";
