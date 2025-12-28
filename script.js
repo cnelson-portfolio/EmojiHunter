@@ -9,12 +9,12 @@ const gridEl = document.getElementById("grid");
 /* ---------------- Data ---------------- */
 
 const LEVELS = [
-  { name: "Super Easy", size: 3 },
-  { name: "Easy", size: 4 },
-  { name: "Medium", size: 6 },
-  { name: "Hard", size: 8 },
-  { name: "Devil", size: 10 },
-  { name: "Impossible", size: 12 }
+  { name: "Super Easy", size: 8 },
+  { name: "Easy", size: 9 },
+  { name: "Medium", size: 10 },
+  { name: "Hard", size: 12 },
+  { name: "Devil", size: 16 },
+  { name: "Impossible", size: 20 }
 ];
 
 const EMOJIS = ["😀","😈","👻","🐸","🍕","🚀","🎈","🦄","🐶","🐱","🍎","⚽"];
