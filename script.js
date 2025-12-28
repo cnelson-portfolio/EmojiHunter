@@ -6,7 +6,7 @@ const levelNameEl = document.getElementById("levelName");
 const targetEmojiEl = document.getElementById("targetEmoji");
 const gridEl = document.getElementById("grid");
 
-/* ---------------- Data ---------------- */
+/* ---------------- DATA ---------------- */
 
 const LEVELS = [
   { name: "Super Easy", size: 2 },
@@ -14,27 +14,26 @@ const LEVELS = [
   { name: "Medium", size: 5 },
   { name: "Hard", size: 10 },
   { name: "Devil", size: 16 },
-  { name: "Impossible", size: 20 }
+  { name: "Impossible", size: 20 },
+  { name: "BONUS 0% People Make It", size: 25 }
 ];
 
-// 100 unique emojis
 const EMOJIS = [
-  "😀","😁","😂","🤣","😅","😇","🙂","😉","😍","😘",
-  "😎","🤓","😈","👻","💀","🤖","👽","🎃","🐶","🐱",
-  "🐭","🐸","🦊","🐼","🦄","🐷","🐵","🐔","🐧","🐢",
-  "🐙","🦋","🌸","🌈","🔥","⚡","💎","🍎","🍕","🍔",
-  "🍟","🍩","🍪","🎂","🍿","☕","🍺","🍉","⚽","🏀",
-  "🏈","🎾","🎯","🎮","🧩","🎲","🚗","✈️","🚀","🛸",
-  "🚁","🚲","🏝️","🏔️","🌍","🌙","⭐","☀️","⛄","❄️",
-  "🎈","🎉","🎁","🪄","📦","📚","🖍️","🧠","❤️","💙",
-  "💚","💛","🖤","🤍","🤎","💜","💥","✨","🎵","🔔"
+  "😀","😁","😂","🤣","😃","😄","😅","😆","😉","😊",
+  "😍","🥰","😘","😜","🤪","😎","🤩","🥳","😈","👻",
+  "💀","👽","🤖","🎃","🐶","🐱","🐭","🐹","🐰","🦊",
+  "🐻","🐼","🐸","🦄","🐷","🐵","🐔","🐧","🐦","🐤",
+  "🍎","🍌","🍇","🍉","🍓","🍒","🍍","🥝","🥑","🍕",
+  "🍔","🌮","🍩","🍪","🎂","🍿","⚽","🏀","🏈","🎾",
+  "🎲","🎮","🎯","🚗","🚀","✈️","🚁","🛸","⛵","🚲",
+  "🏖️","🏕️","🌋","🌈","🔥","💎","⭐","🌙","☀️","⚡"
 ];
 
 let currentLevel = 0;
 let targetEmoji = "";
 let gameActive = false;
 
-/* ---------------- Overlay ---------------- */
+/* ---------------- OVERLAY ---------------- */
 
 function showOverlay(message, buttonText) {
   overlayMessage.textContent = message;
@@ -46,7 +45,21 @@ function hideOverlay() {
   overlay.style.display = "none";
 }
 
-/* ---------------- Game Logic ---------------- */
+/* ---------------- GRID SCALING ---------------- */
+
+function scaleEmojis() {
+  const cell = document.querySelector(".cell");
+  if (!cell) return;
+
+  const size = Math.min(cell.offsetWidth, cell.offsetHeight);
+  const fontSize = size * 0.8;
+
+  document.querySelectorAll(".cell").forEach(c => {
+    c.style.fontSize = `${fontSize}px`;
+  });
+}
+
+/* ---------------- GAME ---------------- */
 
 function startLevel() {
   gameActive = true;
@@ -59,11 +72,11 @@ function startLevel() {
   targetEmoji = EMOJIS[Math.floor(Math.random() * EMOJIS.length)];
   targetEmojiEl.textContent = targetEmoji;
 
-  const nonTarget = EMOJIS.filter(e => e !== targetEmoji);
+  const nonTargets = EMOJIS.filter(e => e !== targetEmoji);
   const emojis = [];
 
   for (let i = 0; i < totalCells - 1; i++) {
-    emojis.push(nonTarget[Math.floor(Math.random() * nonTarget.length)]);
+    emojis.push(nonTargets[Math.floor(Math.random() * nonTargets.length)]);
   }
 
   emojis.push(targetEmoji);
@@ -88,11 +101,13 @@ function startLevel() {
 
     gridEl.appendChild(cell);
   });
+
+  // 🔑 scale after render
+  requestAnimationFrame(scaleEmojis);
 }
 
 function handleWin() {
   currentLevel++;
-
   if (currentLevel >= LEVELS.length) {
     showOverlay("You beat ALL levels! 🎉", "Play Again");
   } else {
@@ -100,15 +115,18 @@ function handleWin() {
   }
 }
 
-/* ---------------- Button ---------------- */
+/* ---------------- BUTTON ---------------- */
 
 actionButton.addEventListener("click", () => {
-  if (currentLevel >= LEVELS.length) {
-    currentLevel = 0;
-  }
+  if (currentLevel >= LEVELS.length) currentLevel = 0;
   startLevel();
 });
 
-/* ---------------- Init ---------------- */
+/* ---------------- RESIZE SUPPORT ---------------- */
+
+window.addEventListener("resize", scaleEmojis);
+window.addEventListener("orientationchange", scaleEmojis);
+
+/* ---------------- INIT ---------------- */
 
 showOverlay("Can YOU Find the Emoji?", "Start");
