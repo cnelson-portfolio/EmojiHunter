@@ -15,7 +15,7 @@ body {
   background: #000;
   color: #fff;
   font-family: system-ui, sans-serif;
-  overflow: hidden; /* 🔑 never scroll */
+  overflow: hidden;
 }
 
 /* ---------- OVERLAY ---------- */
@@ -34,7 +34,6 @@ body {
   flex-direction: column;
   align-items: center;
   gap: 24px;
-  text-align: center;
 }
 
 #overlayMessage {
@@ -55,7 +54,7 @@ body {
 #game {
   height: 100%;
   display: grid;
-  grid-template-rows: auto 1fr; /* 🔑 top + grid */
+  grid-template-rows: auto 1fr;
 }
 
 /* ---------- TOP ---------- */
@@ -82,14 +81,10 @@ body {
   height: 100%;
 }
 
-/* 🔑 Square cells without aspect-ratio */
 .cell {
   display: flex;
   align-items: center;
   justify-content: center;
   cursor: pointer;
-
-  /* Emoji scales with cell size */
-  font-size: calc(100% * 0.9);
   line-height: 1;
 }
