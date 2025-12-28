@@ -84,3 +84,21 @@ body {
   cursor: pointer;
   user-select: none;
 }
+
+/* ---------- DISABLE SELECTION & HIGHLIGHTING --------*/
+* {
+  user-select: none;
+  -webkit-user-select: none;
+  -ms-user-select: none;
+}
+
+* {
+  -webkit-tap-highlight-color: transparent;
+  tap-highlight-color: transparent;
+
+  user-select: none;
+  -webkit-user-select: none;
+  -ms-user-select: none;
+
+  -webkit-touch-callout: none;
+}
