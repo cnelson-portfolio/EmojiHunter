@@ -44,6 +44,20 @@ function hideOverlay() {
   overlay.style.display = "none";
 }
 
+/* ---------------- GRID SCALING ---------------- */
+
+function scaleEmojis() {
+  const cell = document.querySelector(".cell");
+  if (!cell) return;
+
+  const size = Math.min(cell.offsetWidth, cell.offsetHeight);
+  const fontSize = size * 0.8;
+
+  document.querySelectorAll(".cell").forEach(c => {
+    c.style.fontSize = `${fontSize}px`;
+  });
+}
+
 /* ---------------- GAME ---------------- */
 
 function startLevel() {
@@ -69,7 +83,7 @@ function startLevel() {
 
   gridEl.innerHTML = "";
   gridEl.style.gridTemplateColumns = `repeat(${level.size}, 1fr)`;
-  gridEl.style.gridTemplateRows = `repeat(${level.size}, 1fr)`; // 🔑 force square grid
+  gridEl.style.gridTemplateRows = `repeat(${level.size}, 1fr)`;
 
   emojis.forEach(emoji => {
     const cell = document.createElement("div");
@@ -86,6 +100,9 @@ function startLevel() {
 
     gridEl.appendChild(cell);
   });
+
+  // 🔑 scale after render
+  requestAnimationFrame(scaleEmojis);
 }
 
 function handleWin() {
@@ -103,6 +120,11 @@ actionButton.addEventListener("click", () => {
   if (currentLevel >= LEVELS.length) currentLevel = 0;
   startLevel();
 });
+
+/* ---------------- RESIZE SUPPORT ---------------- */
+
+window.addEventListener("resize", scaleEmojis);
+window.addEventListener("orientationchange", scaleEmojis);
 
 /* ---------------- INIT ---------------- */
 
