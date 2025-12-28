@@ -26,6 +26,10 @@ let gameActive = false;
 /* ---------------- Game Flow ---------------- */
 
 function showOverlay(message, buttonText) {
+  overlay.style.display.remove("none");
+  overlayMessage.style.display.remove("none");
+  actionButton.style.display.remove("none");
+  
   overlayMessage.textContent = message;
   actionButton.textContent = buttonText;
   overlay.style.display = "flex";
