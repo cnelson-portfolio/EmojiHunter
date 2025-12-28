@@ -14,8 +14,7 @@ const LEVELS = [
   { name: "Medium", size: 5 },
   { name: "Hard", size: 10 },
   { name: "Devil", size: 16 },
-  { name: "Impossible", size: 20 },
-  { name: "BONUS 0% People Make It", size: 25 }
+  { name: "Impossible", size: 20 }
 ];
 
 const EMOJIS = [
