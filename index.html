@@ -2,21 +2,12 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-
-  <!-- CRITICAL: Prevent mobile auto-zoom -->
-  <meta name="viewport"
-        content="width=device-width,
-                 height=device-height,
-                 initial-scale=1,
-                 maximum-scale=1,
-                 user-scalable=no" />
-
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Find the Emoji</title>
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
 
-  <!-- Overlay -->
   <div id="overlay">
     <div class="overlay-text">
       <h1 id="overlayMessage">Find the Emoji</h1>
@@ -24,16 +15,13 @@
     </div>
   </div>
 
-  <!-- Game -->
   <div id="game">
     <div id="top">
       <div id="levelName"></div>
       <div id="targetEmoji"></div>
     </div>
 
-    <div id="gridWrapper">
-      <div id="grid"></div>
-    </div>
+    <div id="grid"></div>
   </div>
 
   <script src="script.js"></script>
