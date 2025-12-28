@@ -17,7 +17,6 @@ const LEVELS = [
   { name: "Impossible", size: 20 }
 ];
 
-// 100 unique emojis
 const EMOJIS = [
   "😀","😁","😂","🤣","😃","😄","😅","😆","😉","😊",
   "😍","🥰","😘","😜","🤪","😎","🤩","🥳","😈","👻",
@@ -45,7 +44,7 @@ function hideOverlay() {
   overlay.style.display = "none";
 }
 
-/* ---------------- GAME FLOW ---------------- */
+/* ---------------- GAME ---------------- */
 
 function startLevel() {
   gameActive = true;
@@ -58,17 +57,14 @@ function startLevel() {
   targetEmoji = EMOJIS[Math.floor(Math.random() * EMOJIS.length)];
   targetEmojiEl.textContent = targetEmoji;
 
-  const nonTargetEmojis = EMOJIS.filter(e => e !== targetEmoji);
+  const nonTargets = EMOJIS.filter(e => e !== targetEmoji);
   const emojis = [];
 
   for (let i = 0; i < totalCells - 1; i++) {
-    emojis.push(
-      nonTargetEmojis[Math.floor(Math.random() * nonTargetEmojis.length)]
-    );
+    emojis.push(nonTargets[Math.floor(Math.random() * nonTargets.length)]);
   }
 
   emojis.push(targetEmoji);
-
   emojis.sort(() => Math.random() - 0.5);
 
   gridEl.innerHTML = "";
@@ -108,10 +104,9 @@ actionButton.addEventListener("click", () => {
   if (currentLevel >= LEVELS.length) {
     currentLevel = 0;
   }
-
   startLevel();
 });
 
 /* ---------------- INIT ---------------- */
 
-showOverlay("Can You Find the Emoji?", "Start");
+showOverlay("Can YOU Find the Emoji?", "Start");
