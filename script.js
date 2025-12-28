@@ -17,13 +17,23 @@ const LEVELS = [
   { name: "Impossible", size: 20 }
 ];
 
-const EMOJIS = ["😀","😈","👻","🐸","🍕","🚀","🎈","🦄","🐶","🐱","🍎","⚽", "🏖️", "😅", "😁", "😍", "🫣"];
+/* 100 unique emojis */
+const EMOJIS = [
+  "😀","😃","😄","😁","😆","😅","😂","🤣","😊","😇",
+  "🙂","🙃","😉","😌","😍","🥰","😘","😗","😙","😚",
+  "😋","😛","😜","🤪","😝","🤑","🤗","🤭","🤫","🤔",
+  "🐶","🐱","🐭","🐹","🐰","🦊","🐻","🐼","🐨","🐯",
+  "🦁","🐮","🐷","🐸","🐵","🐔","🐧","🐦","🐤","🐣",
+  "🍎","🍊","🍋","🍌","🍉","🍇","🍓","🫐","🍒","🥝",
+  "🍕","🍔","🌭","🍟","🍿","🧀","🥨","🥐","🍩","🍪",
+  "⚽","🏀","🏈","⚾","🎾","🏐","🎱","🚗","🚕","🚙"
+];
 
 let currentLevel = 0;
 let targetEmoji = "";
 let gameActive = false;
 
-/* ---------------- Game Flow ---------------- */
+/* ---------------- Overlay ---------------- */
 
 function showOverlay(message, buttonText) {
   overlayMessage.textContent = message;
@@ -34,6 +44,8 @@ function showOverlay(message, buttonText) {
 function hideOverlay() {
   overlay.style.display = "none";
 }
+
+/* ---------------- Game Logic ---------------- */
 
 function startLevel() {
   gameActive = true;
@@ -49,31 +61,35 @@ function startLevel() {
   const emojis = [];
   const nonTargetEmojis = EMOJIS.filter(e => e !== targetEmoji);
 
-  // Fill grid with emojis EXCLUDING the target
   for (let i = 0; i < totalCells - 1; i++) {
     emojis.push(
       nonTargetEmojis[Math.floor(Math.random() * nonTargetEmojis.length)]
     );
   }
 
-  // Insert target emoji exactly once
   emojis.push(targetEmoji);
-
-  // Shuffle
   emojis.sort(() => Math.random() - 0.5);
 
-  // Build grid
+  buildGrid(level.size, emojis);
+}
+
+function buildGrid(size, emojis) {
   gridEl.innerHTML = "";
-  gridEl.style.gridTemplateColumns = `repeat(${level.size}, 1fr)`;
+  gridEl.style.gridTemplateColumns = `repeat(${size}, 1fr)`;
+
+  // Calculate emoji size dynamically
+  const gridSize = gridEl.clientWidth;
+  const cellSize = gridSize / size;
+  const emojiSize = Math.floor(cellSize * 0.65);
 
   emojis.forEach(emoji => {
     const cell = document.createElement("div");
     cell.className = "cell";
     cell.textContent = emoji;
+    cell.style.fontSize = `${emojiSize}px`;
 
     cell.addEventListener("click", () => {
       if (!gameActive) return;
-
       if (emoji === targetEmoji) {
         gameActive = false;
         handleWin();
@@ -86,7 +102,6 @@ function startLevel() {
 
 function handleWin() {
   currentLevel++;
-
   if (currentLevel >= LEVELS.length) {
     showOverlay("You beat ALL levels! 🎉", "Play Again");
   } else {
@@ -94,16 +109,13 @@ function handleWin() {
   }
 }
 
-/* ---------------- Button Logic ---------------- */
+/* ---------------- Button ---------------- */
 
 actionButton.addEventListener("click", () => {
-  if (currentLevel >= LEVELS.length) {
-    currentLevel = 0;
-  }
-
+  if (currentLevel >= LEVELS.length) currentLevel = 0;
   startLevel();
 });
 
-/* ---------------- Initial State ---------------- */
+/* ---------------- Init ---------------- */
 
 showOverlay("Can YOU Find the Emoji", "Start");
