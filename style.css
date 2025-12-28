@@ -55,7 +55,6 @@ html, body {
   flex-direction: column;
 }
 
-/* Top area */
 #top {
   text-align: center;
   padding: 8px;
@@ -69,7 +68,7 @@ html, body {
   font-size: clamp(28px, 6vmin, 48px);
 }
 
-/* Grid wrapper ensures NO overflow */
+/* Grid wrapper */
 #gridWrapper {
   flex: 1;
   display: flex;
@@ -78,10 +77,10 @@ html, body {
   padding: 8px;
 }
 
-/* Grid always fits screen */
+/* ✅ SAFETY MARGIN ADDED HERE */
 #grid {
-  width: min(95vmin, 95vw);
-  height: min(95vmin, 95vw);
+  width: min(92vmin, 92vw);
+  height: min(92vmin, 92vw);
 
   display: grid;
   gap: 4px;
@@ -93,13 +92,12 @@ html, body {
   align-items: center;
   justify-content: center;
 
-  /* 🔑 KEY FIX: Emoji size relative to cell */
+  /* Emoji scales WITH cell size */
   font-size: 80%;
   cursor: pointer;
-  user-select: none;
 }
 
-/* Disable selection & highlighting */
+/* Disable selection & highlights */
 * {
   user-select: none;
   -webkit-user-select: none;
