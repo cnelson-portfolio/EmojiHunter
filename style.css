@@ -15,15 +15,7 @@ body {
   background: #000;
   color: #fff;
   font-family: system-ui, sans-serif;
-}
-
-/* ---------- APP ---------- */
-#app {
-  height: 100vh;
-  max-height: 100svh; /* Smart TVs + mobile safe */
-  display: flex;
-  flex-direction: column;
-  overflow: hidden;
+  overflow: hidden; /* 🔑 never scroll */
 }
 
 /* ---------- OVERLAY ---------- */
@@ -61,13 +53,12 @@ body {
 
 /* ---------- GAME ---------- */
 #game {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  min-height: 0;
+  height: 100%;
+  display: grid;
+  grid-template-rows: auto 1fr; /* 🔑 top + grid */
 }
 
-/* Top */
+/* ---------- TOP ---------- */
 #top {
   padding: 12px;
   text-align: center;
@@ -84,22 +75,21 @@ body {
 
 /* ---------- GRID ---------- */
 #grid {
-  flex: 1;
   display: grid;
   gap: 4px;
   padding: 8px;
-  min-height: 0;
+  width: 100%;
+  height: 100%;
 }
 
-/* Square cells that scale */
+/* 🔑 Square cells without aspect-ratio */
 .cell {
-  aspect-ratio: 1 / 1;
   display: flex;
   align-items: center;
   justify-content: center;
   cursor: pointer;
 
-  /* 🔑 Emoji size tied to cell size */
-  font-size: 70%;
+  /* Emoji scales with cell size */
+  font-size: calc(100% * 0.9);
   line-height: 1;
 }
