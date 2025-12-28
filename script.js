@@ -69,6 +69,7 @@ function startLevel() {
 
   gridEl.innerHTML = "";
   gridEl.style.gridTemplateColumns = `repeat(${level.size}, 1fr)`;
+  gridEl.style.gridTemplateRows = `repeat(${level.size}, 1fr)`; // 🔑 force square grid
 
   emojis.forEach(emoji => {
     const cell = document.createElement("div");
@@ -77,7 +78,6 @@ function startLevel() {
 
     cell.addEventListener("click", () => {
       if (!gameActive) return;
-
       if (emoji === targetEmoji) {
         gameActive = false;
         handleWin();
@@ -90,7 +90,6 @@ function startLevel() {
 
 function handleWin() {
   currentLevel++;
-
   if (currentLevel >= LEVELS.length) {
     showOverlay("You beat ALL levels! 🎉", "Play Again");
   } else {
@@ -101,9 +100,7 @@ function handleWin() {
 /* ---------------- BUTTON ---------------- */
 
 actionButton.addEventListener("click", () => {
-  if (currentLevel >= LEVELS.length) {
-    currentLevel = 0;
-  }
+  if (currentLevel >= LEVELS.length) currentLevel = 0;
   startLevel();
 });
 
