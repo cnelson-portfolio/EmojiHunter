@@ -8,23 +8,22 @@
 </head>
 <body>
 
-  <div id="game">
+  <!-- Overlay -->
+  <div id="overlay">
+    <div class="overlay-text">
+      <h1 id="overlayMessage">Find the Emoji</h1>
+      <button id="actionButton">Start</button>
+    </div>
+  </div>
 
+  <!-- Game -->
+  <div id="game">
     <div id="top">
-      <div id="level-name">Super Easy</div>
-      <div id="target">
-        Find this:
-        <span id="target-emoji">😀</span>
-      </div>
+      <div id="levelName"></div>
+      <div id="targetEmoji"></div>
     </div>
 
     <div id="grid"></div>
-
-    <div id="overlay" class="hidden">
-      <div id="overlay-text"></div>
-      <button id="next-btn">Start</button>
-    </div>
-
   </div>
 
   <script src="script.js"></script>
