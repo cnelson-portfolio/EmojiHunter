@@ -1,80 +1,79 @@
-const gridEl = document.getElementById("grid");
-const levelNameEl = document.getElementById("level-name");
-const targetEmojiEl = document.getElementById("target-emoji");
 const overlay = document.getElementById("overlay");
-const nextBtn = document.getElementById("next-btn");
+const overlayMessage = document.getElementById("overlayMessage");
+const actionButton = document.getElementById("actionButton");
 
-/* ----------- BUTTON FUNCTIONALITY --------- */
-function showButton(text) {
-  nextBtn.textContent = text;
-  nextBtn.style.display = "block";
-}
+const levelNameEl = document.getElementById("levelName");
+const targetEmojiEl = document.getElementById("targetEmoji");
+const gridEl = document.getElementById("grid");
 
-function hideButton() {
-  nextBtn.style.display = "none";
-}
-/* ---------------- LEVELS ---------------- */
+/* ---------------- Data ---------------- */
 
 const LEVELS = [
   { name: "Super Easy", size: 3 },
-  { name: "Easy", size: 5 },
-  { name: "Medium", size: 8 },
-  { name: "Hard", size: 12 },
-  { name: "Devil", size: 18 },
-  { name: "Impossible", size: 25 }
+  { name: "Easy", size: 4 },
+  { name: "Medium", size: 6 },
+  { name: "Hard", size: 8 },
+  { name: "Devil", size: 10 },
+  { name: "Impossible", size: 12 }
 ];
+
+const EMOJIS = ["😀","😈","👻","🐸","🍕","🚀","🎈","🦄","🐶","🐱","🍎","⚽"];
 
 let currentLevel = 0;
-let gameStarted = false;
+let targetEmoji = "";
+let gameActive = false;
 
-/* ---------------- EMOJIS ---------------- */
+/* ---------------- Game Flow ---------------- */
 
-const EMOJIS = [
-  "😀","😃","😄","😁","😆","😅","😂","🙂","🙃","😉",
-  "😊","😇","🥰","😍","🤪","😎","🥸","😺","😸","😹",
-  "😻","😼","🙈","🙉","🙊","🐶","🐱","🐭","🐹","🐰"
-];
-
-function randomEmoji() {
-  return EMOJIS[Math.floor(Math.random() * EMOJIS.length)];
+function showOverlay(message, buttonText) {
+  overlayMessage.textContent = message;
+  actionButton.textContent = buttonText;
+  overlay.style.display = "flex";
 }
 
-/* ---------------- GAME ---------------- */
+function hideOverlay() {
+  overlay.style.display = "none";
+}
 
 function startLevel() {
-  overlay.classList.add("hidden");
-  gridEl.innerHTML = "";
+  gameActive = true;
+  hideOverlay();
 
   const level = LEVELS[currentLevel];
   levelNameEl.textContent = level.name;
 
-  const size = level.size;
-  gridEl.style.gridTemplateColumns = `repeat(${size}, 1fr)`;
-
-  const targetEmoji = randomEmoji();
+  const totalCells = level.size * level.size;
+  targetEmoji = EMOJIS[Math.floor(Math.random() * EMOJIS.length)];
   targetEmojiEl.textContent = targetEmoji;
 
-  const totalCells = size * size;
-  const cells = [];
+  const emojis = [];
 
-  while (cells.length < totalCells) {
-    const e = randomEmoji();
-    if (e !== targetEmoji) cells.push(e);
+  // Fill grid with random emojis
+  for (let i = 0; i < totalCells - 1; i++) {
+    emojis.push(EMOJIS[Math.floor(Math.random() * EMOJIS.length)]);
   }
 
-  const targetIndex = Math.floor(Math.random() * totalCells);
-  cells[targetIndex] = targetEmoji;
+  // Insert target emoji exactly once
+  emojis.push(targetEmoji);
 
-  cells.forEach(emoji => {
+  // Shuffle
+  emojis.sort(() => Math.random() - 0.5);
+
+  // Build grid
+  gridEl.innerHTML = "";
+  gridEl.style.gridTemplateColumns = `repeat(${level.size}, 1fr)`;
+
+  emojis.forEach(emoji => {
     const cell = document.createElement("div");
     cell.className = "cell";
     cell.textContent = emoji;
 
     cell.addEventListener("click", () => {
+      if (!gameActive) return;
+
       if (emoji === targetEmoji) {
-        winLevel();
-      } else {
-        cell.style.opacity = "0.3";
+        gameActive = false;
+        handleWin();
       }
     });
 
@@ -82,43 +81,26 @@ function startLevel() {
   });
 }
 
-function winLevel() {
-  overlay.classList.remove("hidden");
+function handleWin() {
+  currentLevel++;
 
-  if (currentLevel < LEVELS.length - 1) {
-    overlayText.textContent = "🎉 You found it!";
-    showButton("Next Level");
+  if (currentLevel >= LEVELS.length) {
+    showOverlay("You beat ALL levels! 🎉", "Play Again");
   } else {
-    overlayText.textContent = "🏆 You beat IMPOSSIBLE!";
-    showButton("Play Again");
+    showOverlay("Level Complete!", "Next Level");
   }
 }
 
-/* ---------------- BUTTON LOGIC ---------------- */
-nextBtn.addEventListener("click", () => {
-  hideButton();
-  overlay.classList.add("hidden");
+/* ---------------- Button Logic ---------------- */
 
-  if (!gameStarted) {
-    gameStarted = true;
-    startLevel();
-    return;
-  }
-
-  if (currentLevel < LEVELS.length - 1) {
-    currentLevel++;
-    startLevel();
-  } else {
+actionButton.addEventListener("click", () => {
+  if (currentLevel >= LEVELS.length) {
     currentLevel = 0;
-    startLevel();
   }
+
+  startLevel();
 });
 
+/* ---------------- Initial State ---------------- */
 
-/* ---------------- INITIAL STATE ---------------- */
-
-// Show start screen overlay
-overlay.classList.remove("hidden");
-overlayText.textContent = "Ready to Play?";
-showButton("Start");
-
+showOverlay("Find the Emoji", "Start");
