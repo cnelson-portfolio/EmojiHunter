@@ -105,4 +105,4 @@ actionButton.addEventListener("click", () => {
 
 /* ---------------- Initial State ---------------- */
 
-showOverlay("Find the Emoji", "Start");
+showOverlay("Are You Ready to Find the Emoji", "Start");
