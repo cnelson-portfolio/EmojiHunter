@@ -114,4 +114,4 @@ actionButton.addEventListener("click", () => {
 
 /* ---------------- INIT ---------------- */
 
-showOverlay("Can YOU Find the Emoji?", "Start");
+showOverlay("Can You Find the Emoji?", "Start");
