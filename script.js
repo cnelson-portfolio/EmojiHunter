@@ -33,6 +33,8 @@ function showOverlay(message, buttonText) {
 
 function hideOverlay() {
   overlay.style.display = "none";
+  overlayMessage.style.display = "none";
+  actionButton.style.display = "none";
 }
 
 function startLevel() {
