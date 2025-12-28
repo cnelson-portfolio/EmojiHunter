@@ -14,7 +14,8 @@ const LEVELS = [
   { name: "Medium", size: 5 },
   { name: "Hard", size: 10 },
   { name: "Devil", size: 16 },
-  { name: "Impossible", size: 20 }
+  { name: "Impossible", size: 20 },
+  { name: "BONUS: 0% People Make This", size: 25 }
 ];
 
 const EMOJIS = [
@@ -128,4 +129,4 @@ window.addEventListener("orientationchange", scaleEmojis);
 
 /* ---------------- INIT ---------------- */
 
-showOverlay("Can YOU Find the Emoji?", "Start");
+showOverlay("Can YOU Find the Emoji??", "Start");
