@@ -26,10 +26,6 @@ let gameActive = false;
 /* ---------------- Game Flow ---------------- */
 
 function showOverlay(message, buttonText) {
-  overlay.style.display.remove("none");
-  overlayMessage.style.display.remove("none");
-  actionButton.style.display.remove("none");
-  
   overlayMessage.textContent = message;
   actionButton.textContent = buttonText;
   overlay.style.display = "flex";
@@ -37,8 +33,6 @@ function showOverlay(message, buttonText) {
 
 function hideOverlay() {
   overlay.style.display = "none";
-  overlayMessage.style.display = "none";
-  actionButton.style.display = "none";
 }
 
 function startLevel() {
@@ -53,10 +47,13 @@ function startLevel() {
   targetEmojiEl.textContent = targetEmoji;
 
   const emojis = [];
+  const nonTargetEmojis = EMOJIS.filter(e => e !== targetEmoji);
 
-  // Fill grid with random emojis
+  // Fill grid with emojis EXCLUDING the target
   for (let i = 0; i < totalCells - 1; i++) {
-    emojis.push(EMOJIS[Math.floor(Math.random() * EMOJIS.length)]);
+    emojis.push(
+      nonTargetEmojis[Math.floor(Math.random() * nonTargetEmojis.length)]
+    );
   }
 
   // Insert target emoji exactly once
