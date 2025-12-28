@@ -9,15 +9,15 @@ const gridEl = document.getElementById("grid");
 /* ---------------- Data ---------------- */
 
 const LEVELS = [
-  { name: "Super Easy", size: 8 },
-  { name: "Easy", size: 9 },
-  { name: "Medium", size: 10 },
-  { name: "Hard", size: 12 },
+  { name: "Super Easy", size: 2 },
+  { name: "Easy", size: 3 },
+  { name: "Medium", size: 5 },
+  { name: "Hard", size: 10 },
   { name: "Devil", size: 16 },
   { name: "Impossible", size: 20 }
 ];
 
-const EMOJIS = ["😀","😈","👻","🐸","🍕","🚀","🎈","🦄","🐶","🐱","🍎","⚽"];
+const EMOJIS = ["😀","😈","👻","🐸","🍕","🚀","🎈","🦄","🐶","🐱","🍎","⚽", "🏖️", "😅", "😁", "😍", "🫣"];
 
 let currentLevel = 0;
 let targetEmoji = "";
